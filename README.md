@@ -4,6 +4,9 @@
 
 PDFfusion is a modern, AI-powered web application that allows users to upload PDF documents and ask questions about their content . Built with Flask and LangChain, it provides an intuitive chat interface for document analysis.
 
+<img width="1920" height="972" alt="Screenshot (85)" src="https://github.com/user-attachments/assets/f62941bd-03d4-4aa0-82f1-389106eaf7f3" />
+
+
 ## 🌟 Features
 
 - **Smart PDF Analysis**: Upload any PDF and get intelligent answers to your questions
