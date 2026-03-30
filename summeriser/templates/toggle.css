@@ -1,0 +1,198 @@
+/* ============================================================
+   toggle.css — Theme Toggle Component
+   Drop this into any page that uses [data-theme="dark/light"]
+   ============================================================ */
+
+/* ── Theme CSS Variables ── */
+:root {
+    --toggle-transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    --bg-base:        #0c1118;
+    --bg-left:        rgba(10, 14, 20, 0.85);
+    --bg-right:       rgba(18, 26, 38, 0.85);
+    --border-color:   rgba(59, 130, 246, 0.22);
+    --text-primary:   #f0f4ff;
+    --text-secondary: rgba(200, 214, 240, 0.65);
+    --text-muted:     rgba(200, 214, 240, 0.4);
+    --card-bg:        rgba(255, 255, 255, 0.04);
+    --input-bg:       rgba(255, 255, 255, 0.05);
+    --input-border:   rgba(59, 130, 246, 0.3);
+    --accent:         #3b82f6;
+    --accent-2:       #8b5cf6;
+    --particle-color: rgba(59, 130, 246, 0.12);
+    --glow:           rgba(59, 130, 246, 0.18);
+    --scrollbar-track:#111827;
+    --scrollbar-thumb:rgba(59, 130, 246, 0.45);
+}
+
+[data-theme="light"] {
+    --bg-base:        #eef2f9;
+    --bg-left:        rgba(240, 245, 255, 0.92);
+    --bg-right:       rgba(248, 250, 255, 0.92);
+    --border-color:   rgba(59, 130, 246, 0.18);
+    --text-primary:   #0d1b2e;
+    --text-secondary: rgba(20, 40, 80, 0.72);
+    --text-muted:     rgba(20, 40, 80, 0.42);
+    --card-bg:        rgba(255, 255, 255, 0.75);
+    --input-bg:       rgba(255, 255, 255, 0.85);
+    --input-border:   rgba(59, 130, 246, 0.35);
+    --accent:         #2563eb;
+    --accent-2:       #7c3aed;
+    --particle-color: rgba(59, 130, 246, 0.07);
+    --glow:           rgba(59, 130, 246, 0.12);
+    --scrollbar-track:#dce5f5;
+    --scrollbar-thumb:rgba(59, 130, 246, 0.35);
+}
+
+/* ── Wrapper ── */
+.theme-toggle-wrap {
+    position: fixed;
+    top: 1.4rem;
+    right: 1.6rem;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* ── Label text ── */
+.toggle-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color var(--toggle-transition);
+    user-select: none;
+}
+
+/* ── Pill container ── */
+.theme-toggle {
+    position: relative;
+    width: 58px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+/* ── Track ── */
+.toggle-track {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d1b69 100%);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    transition: background var(--toggle-transition),
+                border-color var(--toggle-transition),
+                box-shadow var(--toggle-transition);
+    overflow: hidden;
+}
+
+/* Stars (dark mode) */
+.toggle-track::before {
+    content: '✦ ✦';
+    position: absolute;
+    font-size: 6px;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.55);
+    top: 50%;
+    left: 6px;
+    transform: translateY(-50%);
+    transition: opacity var(--toggle-transition);
+    opacity: 1;
+    line-height: 1;
+}
+
+/* Sun icon (light mode) */
+.toggle-track::after {
+    content: '☀';
+    position: absolute;
+    font-size: 11px;
+    color: rgba(255, 180, 0, 0.85);
+    top: 50%;
+    right: 7px;
+    transform: translateY(-50%);
+    transition: opacity var(--toggle-transition);
+    opacity: 0;
+    line-height: 1;
+}
+
+/* ── Thumb knob ── */
+.toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #c8d8f8, #93b4f0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    transition: transform var(--toggle-transition),
+                background var(--toggle-transition),
+                box-shadow var(--toggle-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    user-select: none;
+}
+
+/* Moon emoji on thumb */
+.toggle-thumb::after {
+    content: '🌙';
+    font-size: 10px;
+    line-height: 1;
+    transition: opacity var(--toggle-transition),
+                transform var(--toggle-transition);
+}
+
+/* ── Checked = Light Mode ── */
+input:checked ~ .toggle-track {
+    background: linear-gradient(135deg, #bfd9ff 0%, #e0d4ff 100%);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input:checked ~ .toggle-track::before { opacity: 0; }
+input:checked ~ .toggle-track::after  { opacity: 1; }
+
+input:checked ~ .toggle-thumb {
+    transform: translateX(28px);
+    background: linear-gradient(145deg, #fff5cc, #ffdd57);
+    box-shadow: 0 2px 10px rgba(255, 200, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+input:checked ~ .toggle-thumb::after {
+    content: '☀️';
+    font-size: 11px;
+}
+
+/* ── Hover glow ── */
+.theme-toggle:hover .toggle-track {
+    box-shadow: 0 0 0 3px var(--glow);
+}
+
+/* ── Focus ring (a11y) ── */
+.theme-toggle input:focus-visible ~ .toggle-track {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .theme-toggle-wrap {
+        top: 0.9rem;
+        right: 1rem;
+    }
+}
